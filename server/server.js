@@ -2,6 +2,10 @@ const express = require('express');
 const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');
+const { ApolloServer } = require('apollo-server-express');
+const typeDefs = require('./schema');
+const resolvers = require('./resolvers');
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -13,6 +17,14 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => ({ ...req.context })
+});
+
+server.applyMiddleware({ app });
 
 app.use(routes);
 
