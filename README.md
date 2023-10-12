@@ -4,7 +4,7 @@
 This is a book search engine using the Google Books API. It allows users to search for books and save them to their account. It uses GraphQL to query the database and Apollo Server to fetch the data.
 
 ## Deployed Application
-<img src="" alt="Preview">
+<img src="./preview.png" alt="Preview" height="700px" width="900px">
 
 [Click Me!]()
 
