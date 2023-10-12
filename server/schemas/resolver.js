@@ -32,7 +32,7 @@ const resolvers = {
         },
 
         //Save a book to a user's savedBooks
-        saveBook: async (parent, { bookId }, context) => {
+        saveBook: async (parent, { bookInput }, context) => {
             if (!context.user) throw new Error('Authentication Error!');
             const updatedUser = await User.findByIdAndUpdate(
                 { _id: context.user._id },
