@@ -3,8 +3,8 @@ const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');
 const { ApolloServer } = require('apollo-server-express');
-const typeDefs = require('./schema');
-const resolvers = require('./resolvers');
+const typeDefs = require('./schemas/typeDefs');
+const resolvers = require('./schemas/resolver');
 
 
 const app = express();
@@ -24,10 +24,14 @@ const server = new ApolloServer({
   context: ({ req }) => ({ ...req.context })
 });
 
-server.applyMiddleware({ app });
+server.start().then(() => {
+  server.applyMiddleware({ app });
 
-app.use(routes);
+  app.use(routes);
 
-db.once('open', () => {
-  app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
+  db.once('open', () => {
+    app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
+  });
+}).catch(error => {
+  console.error('Failed to start Apollo Server:', error);
 });
