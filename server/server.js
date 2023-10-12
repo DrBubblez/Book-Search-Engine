@@ -5,10 +5,16 @@ const routes = require('./routes');
 const { ApolloServer } = require('apollo-server-express');
 const typeDefs = require('./schemas/typeDefs');
 const resolvers = require('./schemas/resolver');
-
+const { authMiddleware } = require('./utils/auth');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware,
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -17,12 +23,6 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: ({ req }) => ({ ...req.context })
-});
 
 server.start().then(() => {
   server.applyMiddleware({ app });

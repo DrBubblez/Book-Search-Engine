@@ -29,7 +29,6 @@ module.exports = {
     }
 
     // send to next endpoint
-    req.context = { user: data };
     next();
   },
   signToken: function ({ username, email, _id }) {
