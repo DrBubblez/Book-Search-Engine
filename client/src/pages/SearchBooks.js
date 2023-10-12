@@ -16,7 +16,7 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 
 const SAVE_BOOK = gql`
-  mutation SaveBook($bookInput: BookInput!) {
+  mutation saveBook($bookInput: BookInput!) {
     saveBook(bookInput: $bookInput) {
       _id
       username
@@ -85,6 +85,7 @@ const SearchBooks = () => {
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    console.log(bookToSave);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
