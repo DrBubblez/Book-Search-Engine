@@ -1,58 +1,47 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-    #Custom types
-    input BookInput {
-        authors: [String]
-        description: String!
-        title: String!
-        bookId: String!
-        image: String
-        link: String
-    }
+  type User {
+    _id: ID!
+    username: String!
+    email: String!
+    bookCount: Int
+    savedBooks: [Book]
+  }
 
-    input UserInput {
-        username: String!
-        email: String!
-        password: String!
-    }
+  type Auth {
+    token: ID!
+    user: User
+  }
 
-    #Main data types
-    type Book {
-        bookId: String!
-        authors: [String]
-        description: String!
-        title: String!
-        image: String
-        link: String
-    }
+  type Book {
+    bookId: ID!
+    authors: [String]
+    description: String
+    title: String
+    image: String
+    link: String
+  }
 
-    type User {
-        _id: ID!
-        username: String!
-        email: String!
-        bookCount: Int
-        savedBooks: [Book]
-    }
+  input InputBook {
+    bookId: String
+    authors: [String]
+    title: String
+    description: String
+    image: String
+    link: String
+  }
 
-    type Auth {
-        token: String!
-        user: User
-    }
+  type Query {
+    me: User
+  }
 
-    #Main Operation types
-    type Query {
-        me: User
-        getSingleUser(userId: ID, username: String): User
-    }
-
-    type Mutation {
-        login(email: String!, password: String!): Auth
-        addUser(username: String!, email: String!, password: String!): Auth
-        saveBook(bookInput: BookInput!): User
-        removeBook(bookId: String!): User
-        deleteBook(bookId: String!): User
-    }
+  type Mutation {
+    login(email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
+    saveBook(newBook: InputBook!): User
+    removeBook(bookId: ID!): User
+  }
 `;
 
 module.exports = typeDefs;
