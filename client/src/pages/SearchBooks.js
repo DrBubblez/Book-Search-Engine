@@ -16,11 +16,11 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 
 const SAVE_BOOK = gql`
-  mutation saveBook($bookData: BookInput!) {
-    saveBook(bookData: $bookData) {
+  mutation SaveBook($bookInput: BookInput!) {
+    saveBook(bookInput: $bookInput) {
       _id
       username
-      saveBooks {
+      savedBooks {
         bookId
         authors
         description
@@ -95,7 +95,7 @@ const SearchBooks = () => {
 
     try {
       const { data } = await saveBook({
-        variables: { bookData: bookToSave },
+        variables: { bookInput: bookToSave },
       });
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {

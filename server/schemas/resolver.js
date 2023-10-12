@@ -34,11 +34,9 @@ const resolvers = {
         //Save a book to a user's savedBooks
         saveBook: async (parent, { bookInput }, context) => {
             if (!context.user) throw new Error('Authentication Error!');
-            const updatedUser = await User.findByIdAndUpdate(
-                { _id: context.user._id },
-                { $addToSet: { savedBooks: bookInput } },
-                { new: true, runValidators: true }
-            );
+            const updatedUser = await User.findByIdAndUpdate(context.user._id, { 
+                $addToSet: { savedBooks: bookInput } }, 
+                { new: true, runValidators: true });
             if (!updatedUser) throw new Error('Error saving book')
             return updatedUser;
         },
