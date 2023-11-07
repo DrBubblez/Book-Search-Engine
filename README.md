@@ -6,7 +6,7 @@ This is a book search engine using the Google Books API. It allows users to sear
 ## Deployed Application
 <img src="./preview.png" alt="Preview" height="700px" width="900px">
 
-[Click Me!]()
+[Click Me!](https://google-book-eng-f9281f1651e4.herokuapp.com)
 
 ## Table of Contents
 - [Installation](#installation)
